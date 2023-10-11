@@ -1,6 +1,8 @@
 import uuid
 import csv
-from functools import wraps
+
+FIELDS = ["id", "name", "description", "price", "quantity"]
+FILE_PATH = "./db/products.csv"
 
 
 class Product:
@@ -11,118 +13,123 @@ class Product:
         self.description = description
         self.price = price
         self.quantity = quantity
+        
 
-    def set_product(self, new_name, new_description, new_price, new_quantity):
-        if type(self.name) == str:
-            self.name = new_name
-        else:
-            print("Invalid Name")
+    
+    def _validation(self, data): 
+        valid_type = { 
+            "name": str,
+            "description": str,
+            "price": float,
+            "quantity": int
+        }   
+            
+        for item in data:
+            if type(data.get(item)) != valid_type.get(item):
+                return f"Cannot set invalid value :{item}"
+            
+            elif data.get(item):
+                return f"Cannot set an empty value :{item}"
+            
 
-        if type(self.description) == str:
-            self.description = new_description
-        else:
-            print("Invalid Description")
+    def set_product(self, **kwargs):
+            
+        invalid = self._validation(kwargs)
 
-        if type(self.price) == int:
-            self.price = new_price
-        else:
-            print("Invalid Amount")
+        if invalid:
+            return invalid 
+        
+        self.name = kwargs.get("name", self.name)
+        self.description = kwargs.get("description", self.description)
+        self.price = kwargs.get("price", self.price)
+        self.quantity = kwargs.get("quantity", self.quantity)
 
-        if type(self.quantity) == int:
-            self.quantity = new_quantity
-        else:
-            print("Invalid Quantity")
 
     def get_product_details(self):
         return self.__dict__
 
 
-# p1 = Product("Apple", "Apple is very delicious", 20, 4)
-# p2 = Product("Mango", "Mango is very delicious", 25, 2)
-# p3 = Product("Banana", "Banana is very delicious", 30, 4)
-# p4 = Product("Grapes", "Grapes is very delicious", 40, 20)
-# p5 = Product("Watermelon", "Watermelon is very delicious", 35, 1)
-# p6 = Product("Strawberry", "Strawberry is very delicious", 30, 10)
-
-
 def get_products():
-    list1 = []
-    file = open("./db/products.csv", "r")
-    reader = csv.DictReader(file)
+    with open(FILE_PATH, "r") as file:
+        reader = csv.DictReader(file)
 
-    for item in reader:
-        list1.append(item["name"])
-
-    file.close()
-    return list1
+        records = []
+        for item in reader:
+            records.append(item)
+        return records
 
 
+def create_products(name, description, price, quantity):
+    p = Product(name, description, price, quantity)
+    d = p.get_product_details()
 
-def create_products(product,name, description, price, quantity):
-    p=product(name, description, price, quantity)
-    d=p.get_product_details()
-    file = open("./db/products.csv", "a")
-
-    fields = ["id", "name", "description", "price", "quantity"]
-    writer = csv.DictWriter(file, fieldnames=fields)
+    file = open(FILE_PATH, "a")
+    writer = csv.DictWriter(file, fieldnames=FIELDS)
     writer.writerow(d)
     file.close()
 
-# create_products(Product,"Apple", "Apple is very delicious", 20, 4)
-# create_products(Product,"Mango", "Mango is very delicious", 25, 2)
-# create_products(Product,"Banana", "Banana is very delicious", 30, 4)
-# create_products(Product,"Grapes", "Grapes is very delicious", 40, 20)
-# create_products(Product,"Watermelon", "Watermelon is very delicious", 35, 1)
-# create_products(Product,"Strawberry", "Strawberry is very delicious", 30, 10)
 
 def get_product(id):
+    with open(FILE_PATH, "r") as file:
+        reader = csv.DictReader(file)
 
-    file = open("./db/products.csv", "r")
-    reader = csv.DictReader(file)
-
-    for item in reader:
-        if item["id"]==id:
-            print(item)
-    file.close()
+        for item in reader:
+            if item["id"]==id:
+                return item
     
 
-# get_product("6478da5e-82b7-44e4-825b-deac414639e3")
-
-
 def update_product(id, name, description, price, quantity):
-    file = open("./db/products.csv", "r+")
-    reader = csv.DictReader(file)
-
-    L=[]
-    found=False
-
-    for row in reader:
-        if row["id"]==id:
-            found=True
-            row["name"]=name
-            row["description"]=description
-            row["price"]=price
-            row["quantity"]=quantity
-        L.append(row)
-    file.close()
-    if found==False:
-        print("Fruit not Found")
-    else:
-        file=open("./db/products.csv","w+",newline="")
-        fields = ["id", "name", "description", "price", "quantity"]
-        writer=csv.DictWriter(file,fieldnames=fields)
-        writer.writerows(L)
-        file.seek(0)
+    with open(FILE_PATH, "r") as file:
         reader = csv.DictReader(file)
-        for row in reader:
-            print(row)
-        file.close()
-update_product("95e0f7e8-4715-4dbf-be57-50c41eb94a70","pappya", "Apple is very delicious", 20, 4)
 
+        records = []
+        is_exists = False
+
+        for row in reader:
+            if row["id"]==id:
+                row["name"]=name
+                row["description"]=description
+                row["price"]=price
+                row["quantity"]=quantity
+
+                is_exists = True
+            records.append(row)
+
+    if is_exists:
+        with open(FILE_PATH, "w") as file:
+            writer=csv.DictWriter(file,fieldnames=FIELDS)
+            writer.writeheader()
+            writer.writerows(records)
+            reader = csv.DictReader(file)         
+    else:
+        return (is_exists, "Product does not exists")
+    
+    return (is_exists, "Succesfully updated")
 
 
 def delete_product(id):
-    pass
+    with open(FILE_PATH, "r") as file:
+        reader = csv.DictReader(file)
+
+        records = []
+        is_exists = False
+
+        for row in reader:
+            if row["id"] != id:
+                is_exists = True
+                records.append(row)
+    
+    if is_exists:
+        with open(FILE_PATH, "w") as file:
+            writer=csv.DictWriter(file,fieldnames=FIELDS)
+            writer.writeheader()
+            writer.writerows(records)
+            reader = csv.DictReader(file)         
+    else:
+        return (is_exists, "Product does not exists")
+    
+    return (is_exists, "Succesfully deleted")
+
 
 
 # initialization of a product
