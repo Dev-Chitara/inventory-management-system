@@ -1,5 +1,7 @@
 id,name,description,price,quantity
-a24b39c1-13a7-42a0-9266-332c2c72e9f8,Apple,Apple is very delicious,20,4
-20449775-a725-4597-81f7-4e57b170eb37,Mango,Mango is very delicious,25,2
-5c0e3e7d-c44d-4e07-8e41-152777468cb2,Banana,Banana is very delicious,30,4
-efe20bb0-05c6-45c7-9faf-61c6b32853fb,Grapes,Grapes is very delicious,40,20
+5681e482-51e7-4f37-84bb-7e6de1888d0a,Apple,Apple is very delicious,20,4
+33160059-9103-41bb-8828-22a96662d2fb,Mango,Mango is very delicious,25,2
+b1524357-13c7-47cb-981f-74c62ddb5878,Banana,Banana is very delicious,30,4
+eb5c8796-614b-4557-a7db-9f284396322a,Grapes,Grapes is very delicious,40,20
+aecc6009-f123-4fe0-a9c2-87aa3ade7195,Watermelon,Watermelon is very delicious,35,1
+d3179fc2-1604-429c-8563-3ae9b434e446,Strawberry,Strawberry is very delicious,30,10
