@@ -122,8 +122,7 @@ def delete_product(id):
         with open(FILE_PATH, "w") as file:
             writer=csv.DictWriter(file,fieldnames=FIELDS)
             writer.writeheader()
-            writer.writerows(records)
-            reader = csv.DictReader(file)         
+            writer.writerows(records)         
     else:
         return (is_exists, "Product does not exists")
     
