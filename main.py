@@ -14,5 +14,5 @@ from schemas.products import create_products, get_product, get_products, update_
 
 # print(get_products())
 
-print(delete_product("eb5c8796-614b-4557-a7db-9f284396322a"))
+print(delete_product("fc555d42-f712-41f8-befc-713f64b41568"))
 
