@@ -14,8 +14,8 @@ class Product:
         self.price = price
         self.quantity = quantity
         
+        
 
-    
     def _validation(self, data): 
         valid_type = { 
             "name": str,
