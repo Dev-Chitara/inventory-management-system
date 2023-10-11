@@ -8,8 +8,8 @@ class Inventory:
 
 #1 show_inventory - suppliers + products
 
-# . get_inventory  - list of products
-# 2. create_products - initialize and save products
-# 3. get_product -  return single details of a product
-# 4. update_inventory - update and return single details of a product
-# 5. delete_inventory - delete a product
+# . get_inventory  - list of inventory
+# 2. create_inventory - initialize and save inventory
+# 3. get_inventory -  return single details of a inventory
+# 4. update_inventory - update and return single details of a inventory
+# 5. delete_inventory - delete a inventory
