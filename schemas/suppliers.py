@@ -55,13 +55,13 @@ def create_suppliers(name, contact_number):
     supplier_dict = supplier.get_supplier_details()
 
     with open(FILE_PATH, "a") as file:
-        writer = csv.DictWriter(file, FIELDS)
+        writer = csv.DictWriter(file, fieldnames = FIELDS)
         writer.writerow(supplier_dict)
 
 
 def get_supplier(id):
     with open(FILE_PATH, "r") as file:
-        reader = csv.DictReader(file, FIELDS)
+        reader = csv.DictReader(file)
 
         for item in reader:
             if item["id"] == id:
@@ -70,7 +70,7 @@ def get_supplier(id):
 
 def update_supplier(id, name, contact_number):
     with open(FILE_PATH, "r") as file:
-        reader = csv.DictReader(file,FIELDS)
+        reader = csv.DictReader(file)
 
         records = []
         is_exists = False
@@ -84,7 +84,7 @@ def update_supplier(id, name, contact_number):
 
         if is_exists:
             with open(FILE_PATH, "w") as file:
-                writer = csv.DictWriter(file, FIELDS)
+                writer = csv.DictWriter(file, fieldnames = FIELDS)
                 writer.writeheader()
                 writer.writerows(records)
         else:
@@ -95,7 +95,7 @@ def update_supplier(id, name, contact_number):
 
 def delete_supplier(id):
     with open(FILE_PATH, "r") as file:
-        reader = csv.DictReader(file,FIELDS)
+        reader = csv.DictReader(file)
 
         records = []
         is_exists = False
@@ -107,7 +107,7 @@ def delete_supplier(id):
 
         if is_exists:
             with open(FILE_PATH, "w") as file:
-                writer = csv.DictWriter(file, FIELDS)
+                writer = csv.DictWriter(file, fieldnames = FIELDS)
                 writer.writerows(records)
         else:
             return (is_exists, "supplier does not exists")
