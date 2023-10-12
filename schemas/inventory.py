@@ -5,7 +5,7 @@ from suppliers import get_suppliers
 
 FILE_PATH = "./db/inventory.csv"
 
-FIELDS = ["name", "location", "inventory_type"]
+FIELDS = ["id", "name", "location", "inventory_type", "product_ids", "supplier_ids"]
 
 
 def product_id_list():
@@ -139,7 +139,19 @@ def delete_inventory(id):
     
     return (is_exists,"Successfully deleted")
 
-        
+# create_inventory("Fruits","Ahmedabad","Fruit")
+# create_inventory("Dryfruits","Jamnagar","Dry")
+# create_inventory("Colddrinks","Surat","Drinks")
+# create_inventory("Vegitables","Ahmedabad","Veg")
+
+# print(get_inventory_list())
+
+# print(get_inventory("d4e62f03-b3b9-4a56-8ee2-f8069a92ee2c"))
+
+# print(update_inventory("6b345ab5-f635-4631-aa2c-2133b968e7eb","Fruits","Junagadh","Fruit"))
+
+print(delete_inventory("4c8080c3-1fbf-4364-919e-bffdce3824e2"))
+
 #1 id,inventory_name,location,type,products(id),suppliers(id)
 
 #1 show_inventory - suppliers + products

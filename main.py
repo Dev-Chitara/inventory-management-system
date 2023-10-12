@@ -35,7 +35,3 @@ from schemas.inventory import get_inventory_list, create_inventory, get_inventor
 
 # print(delete_supplier("a364a28b-7a7f-4fc2-87bf-f34897c53e8a"))
 
-create_inventory("Fruits","Ahmedabad","Fruit")
-create_inventory("Dryfruits","Jamnagar","Dry")
-create_inventory("Colddrinks","Surat","Drinks")
-create_inventory("Vegitables","Ahmedabad","Veg")
