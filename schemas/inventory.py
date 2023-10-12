@@ -150,7 +150,7 @@ def delete_inventory(id):
 
 # print(update_inventory("6b345ab5-f635-4631-aa2c-2133b968e7eb","Fruits","Junagadh","Fruit"))
 
-print(delete_inventory("4c8080c3-1fbf-4364-919e-bffdce3824e2"))
+# print(delete_inventory("4c8080c3-1fbf-4364-919e-bffdce3824e2"))
 
 #1 id,inventory_name,location,type,products(id),suppliers(id)
 
