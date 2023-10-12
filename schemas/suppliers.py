@@ -113,33 +113,3 @@ def delete_supplier(id):
             return (is_exists, "supplier does not exists")
         
         return (is_exists,"Sucessfully deleted")
-
-
-        
-
-        
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-# . get_products  - list of products
-# 2. create_products - initialize and save products
-# 3. get_product -  return single details of a product
-# 4. update_product - update and return single details of a product
-# 5. delete_product - delete a product
