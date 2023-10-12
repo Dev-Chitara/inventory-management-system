@@ -15,7 +15,6 @@ class Product:
         self.quantity = quantity
         
         
-
     def _validation(self, data): 
         valid_type = { 
             "name": str,
@@ -60,21 +59,20 @@ def get_products():
 
 
 def create_products(name, description, price, quantity):
-    p = Product(name, description, price, quantity)
-    d = p.get_product_details()
+    product = Product(name, description, price, quantity)
+    product_dict = product.get_product_details()
 
-    file = open(FILE_PATH, "a")
-    writer = csv.DictWriter(file, fieldnames=FIELDS)
-    writer.writerow(d)
-    file.close()
-
+    with open(FILE_PATH, "a") as file:
+        writer = csv.DictWriter(file, fieldnames=FIELDS)
+        writer.writerow(product_dict)
+    
 
 def get_product(id):
     with open(FILE_PATH, "r") as file:
         reader = csv.DictReader(file)
 
         for item in reader:
-            if item["id"]==id:
+            if item["id"] == id:
                 return item
     
 
@@ -103,7 +101,7 @@ def update_product(id, name, description, price, quantity):
     else:
         return (is_exists, "Product does not exists")
     
-    return (is_exists, "Succesfully updated")
+    return (is_exists, "Sucessfully updated")
 
 
 def delete_product(id):
