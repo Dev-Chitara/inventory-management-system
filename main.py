@@ -75,6 +75,77 @@ console = Console()
 console.log(option_table)
 
 
+def get_inventory_table():
+    COLUMNS = ["Id", "Name", "Location", "Type", "Product Ids", "Supplier Ids"]    
+    table = Table()
+
+    for item in COLUMNS:
+        table.add_column(item)
+
+    for item in get_inventory_list():
+        table.add_row(item["id"], item["name"], item["location"], item["inventory_type"], item["product_ids"], item["supplier_ids"])
+
+    console = Console()
+    console.log(table)    
+
+
+def inventory_table():
+    COLUMNS = ["Serial No.", "Option"]
+    table = Table()
+    ROWS = ["get_inventory_list", "create_inventory", "get_inventory", "update_inventory", "delete_inventory"]
+
+    for item in COLUMNS:
+        table.add_column(item)
+
+    for num, option in enumerate(ROWS, 1):
+        table.add_row(str(num), option)
+
+    console = Console()
+    console.log(table)
+    
+    user_input = input("Enter a serial number from above table :")
+
+    match user_input:
+        case "1":
+            get_inventory_table()
+
+        case "2":
+            inventory_name = input("Enter Inventory Name :")
+            inventory_location = input("Enter Inventory Location :")
+            inventory_type = input("Enter Inventory Type :")
+            create_inventory(inventory_name, inventory_location, inventory_type)
+            get_inventory_table()
+        
+        case "3":
+            inventory_id = input("Enter Inventory Id :")
+            COLUMNS = ["Id", "Name", "Location", "Type", "Product Ids", "Supplier Ids"]     
+            table = Table()
+
+            for item in COLUMNS:
+                table.add_column(item)
+
+            item = get_inventory(inventory_id)
+            table.add_row(item["id"], item["name"], item["location"], item["inventory_type"], item["product_ids"], item["supplier_ids"])
+            console = Console()
+            console.log(table)
+
+        case "4":
+            inventory_id = input("Enter Inventory Id :")
+            inventory_name = input("Enter Inventory Name :")
+            inventory_location = input("Enter Inventory Location :")
+            inventory_type = input("Enter Inventory Type :")        
+            update_product(inventory_id, inventory_name, inventory_location, inventory_type)
+            get_inventory_table()
+
+        case "5":
+            inventory_id = input("Enter Invetory Id :")
+            delete_inventory(inventory_id)
+            get_inventory_table()
+            
+        case _:
+            print("Invalid Serial No.")
+
+
 def get_products_table():
     COLUMNS = ["Id", "Name", "Descrption", "Price", "Quantity"]    
     table = Table()
@@ -89,7 +160,7 @@ def get_products_table():
     console.log(table)
 
 
-def inventory_table():
+def product_table():
     COLUMNS = ["Serial No.", "Option"]
     table = Table()
     ROWS = ["get_products", "create_products", "get_product", "update_product", "delete_product"]
@@ -221,10 +292,10 @@ user_input = input("Enter a serial number from above table :")
 
 match user_input:
     case "1":
-        pass
+        inventory_table()
 
     case "2":
-        inventory_table()
+        product_table()
 
     case "3":
         supplier_table()
