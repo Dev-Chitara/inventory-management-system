@@ -134,7 +134,7 @@ def inventory_table():
             inventory_name = input("Enter Inventory Name :")
             inventory_location = input("Enter Inventory Location :")
             inventory_type = input("Enter Inventory Type :")        
-            update_product(inventory_id, inventory_name, inventory_location, inventory_type)
+            update_inventory(inventory_id, inventory_name, inventory_location, inventory_type)
             get_inventory_table()
 
         case "5":
