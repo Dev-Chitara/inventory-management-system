@@ -1,31 +1,15 @@
 import uuid
 import csv
-from products import get_products
-from suppliers import get_suppliers
+from schemas.products import get_products
+from schemas.suppliers import get_suppliers
+
 
 FILE_PATH = "./db/inventory.csv"
-
 FIELDS = ["id", "name", "location", "inventory_type", "product_ids", "supplier_ids"]
 
 
-def product_id_list():
-    ids = []
-
-    for item in get_products():
-        ids.append(item["id"])
-    return ids
-
-
-def supplier_id_list():
-    ids = []
-
-    for item in get_suppliers():
-        ids.append(item["id"])
-    return ids
-
-
 class Inventory:
-    def __init__(self,name, location, inventory_type, product_ids = product_id_list(), supplier_ids = supplier_id_list()):
+    def __init__(self,name, location, inventory_type, product_ids = [], supplier_ids = []):
         self.id = uuid.uuid4()
         self.name = name
         self.location = location
@@ -63,6 +47,16 @@ class Inventory:
     def get_inventory_details(self):
         return self.__dict__
         
+
+    def add_product_id(self):
+        for item in get_products():
+            self.product_ids.append(item["id"]) 
+
+
+    def add_supplier_id(self):
+        for item in get_suppliers():
+            self.supplier_ids.append(item["id"])    
+
 
 def get_inventory_list():
     with open(FILE_PATH,"r") as file:

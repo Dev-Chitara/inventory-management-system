@@ -1,9 +1,10 @@
-from schemas.products import  get_products, create_products, get_product, update_product, delete_product
-from schemas.suppliers import get_suppliers, create_suppliers, get_supplier, update_supplier, delete_supplier
-# from schemas.inventory import get_inventory_list, create_inventory, get_inventory, update_inventory, delete_inventory
 import csv
 from rich.console import Console
 from rich.table import Table
+
+from schemas.products import  get_products, create_products, get_product, update_product, delete_product
+from schemas.suppliers import get_suppliers, create_suppliers, get_supplier, update_supplier, delete_supplier
+from schemas.inventory import get_inventory_list, create_inventory, get_inventory, update_inventory, delete_inventory
 
 # Products Test
 # create_products(Product,"Apple", "Apple is very delicious", 20, 4)
@@ -38,28 +39,24 @@ from rich.table import Table
 
 # print(delete_supplier("a364a28b-7a7f-4fc2-87bf-f34897c53e8a"))
 
-def interface():
-    with open("./db/inventory.csv", "r") as file:
-        reader = csv.DictReader(file)
 
-        inventory_name = []
+COLUMN_NAMES = ["Serial No.", "Name", "Location", "Type"]
+table = Table(title = "Inventory Name List")
 
-        for item in reader:
-            inventory_name.append(item["name"])
+for item in COLUMN_NAMES:
+    table.add_column(item)
 
-        columns = ["Serial no.", "Inventory Name"]
-        table = Table(title = "Inventory Name List")
+with open("./db/inventory.csv", "r") as file:
+    reader = csv.DictReader(file)
+    
+    for num, row in enumerate(reader, 1):
+        table.add_row(
+            str(num), 
+            row.get("name"), 
+            row.get("location"), 
+            row.get("inventory_type")
+        )
 
-        for item in columns:
-            table.add_column(item, justify = "center")
+    console = Console()
+    console.log(table)
         
-        for row in enumerate(inventory_name, 1):
-            nums, names = row 
-            nums = str(nums)
-            table.add_row(nums, names)
-
-
-        console = Console()
-        console.log(table)
-        
-interface()
