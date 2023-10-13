@@ -133,25 +133,3 @@ def delete_inventory(id):
     
     return (is_exists,"Successfully deleted")
 
-# create_inventory("Fruits","Ahmedabad","Fruit")
-# create_inventory("Dryfruits","Jamnagar","Dry")
-# create_inventory("Colddrinks","Surat","Drinks")
-# create_inventory("Vegitables","Ahmedabad","Veg")
-
-# print(get_inventory_list())
-
-# print(get_inventory("d4e62f03-b3b9-4a56-8ee2-f8069a92ee2c"))
-
-# print(update_inventory("6b345ab5-f635-4631-aa2c-2133b968e7eb","Fruits","Junagadh","Fruit"))
-
-# print(delete_inventory("4c8080c3-1fbf-4364-919e-bffdce3824e2"))
-
-#1 id,inventory_name,location,type,products(id),suppliers(id)
-
-#1 show_inventory - suppliers + products
-
-# . get_inventory  - list of inventory
-# 2. create_inventory - initialize and save inventory
-# 3. get_inventory -  return single details of a inventory
-# 4. update_inventory - update and return single details of a inventory
-# 5. delete_inventory - delete a inventory

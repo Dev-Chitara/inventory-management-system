@@ -126,15 +126,3 @@ def delete_product(id):
     
     return (is_exists, "Succesfully deleted")
 
-
-
-# initialization of a product
-# set values of a product  - update object values
-# get values of a product - return dictionary
-
-
-# . get_products  - list of products
-# 2. create_products - initialize and save products
-# 3. get_product -  return single details of a product
-# 4. update_product - update and return single details of a product
-# 5. delete_product - delete a product
