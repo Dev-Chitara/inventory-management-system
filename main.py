@@ -26,7 +26,7 @@ def get_table(path, records):
 def interface(filename, functions):
     columns = ["Serial No.", "Option"]
     rows = functions.keys()
-    path = f"./db/{filename}.csv"
+    path = f"/home/dev/workspace/projects/inventory-management-system/db/{filename}.csv"
 
     table = Table(title=filename)
 
