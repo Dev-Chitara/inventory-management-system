@@ -51,14 +51,15 @@ def interface():
         table = Table(title = "Inventory Name List")
 
         for item in columns:
-            table.add_column(item,justify = "center")
+            table.add_column(item, justify = "center")
         
-        for row in enumerate(inventory_name,1):
+        for row in enumerate(inventory_name, 1):
             nums, names = row 
             nums = str(nums)
-            table.add_row(nums,names)
+            table.add_row(nums, names)
 
 
         console = Console()
         console.log(table)
+        
 interface()
