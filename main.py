@@ -59,4 +59,5 @@ with open("./db/inventory.csv", "r") as file:
 
     console = Console()
     console.log(table)
-        
+
+
