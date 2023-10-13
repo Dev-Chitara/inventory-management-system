@@ -61,3 +61,101 @@ with open("./db/inventory.csv", "r") as file:
     console.log(table)
 
 
+COLUMNS = ["Serial No.", "Option"]
+ROWS = ["Inventory", "Product", "Supplier"]
+option_table = Table()
+
+for item in COLUMNS:
+    option_table.add_column(item)
+
+for num, option in enumerate(ROWS, 1):
+    option_table.add_row(str(num), option)
+
+console = Console()
+console.log(option_table)
+
+def get_products_table():
+    COLUMNS = ["Id", "Name", "Descrption", "Price", "Quantity"]    
+    table = Table()
+
+    for item in COLUMNS:
+        table.add_column(item)
+
+    for item in get_products():
+        table.add_row(item["id"], item["name"], item["description"], item["price"], item["quantity"])
+
+    console = Console()
+    console.log(table)
+
+
+def inventory_table():
+    COLUMNS = ["Serial No.", "Option"]
+    table = Table()
+    ROWS = ["get_products", "create_products", "get_product", "update_product", "delete_product"]
+
+    for item in COLUMNS:
+        table.add_column(item)
+
+    for num, option in enumerate(ROWS, 1):
+        table.add_row(str(num), option)
+
+    console = Console()
+    console.log(table)
+    
+    user_input = input("Enter a serial number from above table:")
+
+    match user_input:
+        case "1":
+            get_products_table()
+
+        case "2":
+            product_name = input("Enter Product Name :")
+            product_description = input("Enter Product Description :")
+            product_price = input("Enter Product Price :")
+            product_quantity = input("Enter Product Quantity :")
+            create_products(product_name, product_description, product_price, product_quantity)
+            get_products_table()
+        
+        case "3":
+            product_id = input("Enter Product Id :")
+            COLUMNS = ["Id", "Name", "Descrption", "Price", "Quantity"]    
+            table = Table()
+
+            for item in COLUMNS:
+                table.add_column(item)
+
+            item = get_product(product_id)
+            table.add_row(item["id"], item["name"], item["description"], item["price"], item["quantity"])
+            console = Console()
+            console.log(table)
+
+        case "4":
+            product_id = input("Enter Product Id :")
+            product_name = input("Enter Product Name :")
+            product_description = input("Enter Product Description :")
+            product_price = input("Enter Product Price :")
+            product_quantity = input("Enter Product Quantity :")           
+            update_product(product_id, product_name, product_description, product_price, product_quantity)
+            get_products_table()
+
+        case "5":
+            product_id = input("Enter Product Id :")
+            delete_product(product_id)
+            get_products_table()
+            
+        case _:
+            print("Invalid Serial No.")
+
+
+
+user_input = input("Enter a serial number from above table:")
+
+match user_input:
+    case "1":
+        pass
+
+    case "2":
+        inventory_table()
+
+    case _:
+        print("Invalid Serial No.")
