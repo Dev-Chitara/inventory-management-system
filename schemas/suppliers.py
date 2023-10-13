@@ -108,6 +108,7 @@ def delete_supplier(id):
         if is_exists:
             with open(FILE_PATH, "w") as file:
                 writer = csv.DictWriter(file, fieldnames = FIELDS)
+                writer.writeheader()
                 writer.writerows(records)
         else:
             return (is_exists, "supplier does not exists")

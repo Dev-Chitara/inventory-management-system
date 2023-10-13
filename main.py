@@ -74,6 +74,7 @@ for num, option in enumerate(ROWS, 1):
 console = Console()
 console.log(option_table)
 
+
 def get_products_table():
     COLUMNS = ["Id", "Name", "Descrption", "Price", "Quantity"]    
     table = Table()
@@ -102,7 +103,7 @@ def inventory_table():
     console = Console()
     console.log(table)
     
-    user_input = input("Enter a serial number from above table:")
+    user_input = input("Enter a serial number from above table :")
 
     match user_input:
         case "1":
@@ -147,8 +148,76 @@ def inventory_table():
             print("Invalid Serial No.")
 
 
+def get_suppliers_table():
+    COLUMNS = ["Id", "Name", "Contact Number"]    
+    table = Table()
 
-user_input = input("Enter a serial number from above table:")
+    for item in COLUMNS:
+        table.add_column(item)
+
+    for item in get_suppliers():
+        table.add_row(item["id"], item["name"], item["contact_number"])
+
+    console = Console()
+    console.log(table)
+
+
+def supplier_table():
+    COLUMNS = ["Serial No.", "Option"]
+    table = Table()
+    ROWS = ["get_suppliers", "create_suppliers", "get_supplier", "update_supplier", "delete_supplier"]
+
+    for item in COLUMNS:
+        table.add_column(item)
+
+    for num, option in enumerate(ROWS, 1):
+        table.add_row(str(num), option)
+
+    console = Console()
+    console.log(table)
+    
+    user_input = input("Enter a serial number from above table :")
+
+    match user_input:
+        case "1":
+            get_suppliers_table()
+
+        case "2":
+            supplier_name = input("Enter Supplier Name :")
+            supplier_contact_number = input("Enter Product Contact Number :")
+            create_suppliers(supplier_name, supplier_contact_number)
+            get_suppliers_table()
+        
+        case "3":
+            supplier_id = input("Enter Supplier Id :")
+            COLUMNS = ["Id", "Name", "Contact Number"]    
+            table = Table()
+
+            for item in COLUMNS:
+                table.add_column(item)
+
+            item = get_supplier(supplier_id)
+            table.add_row(item["id"], item["name"], item["contact_number"])
+            console = Console()
+            console.log(table)
+
+        case "4":
+            supplier_id = input("Enter Supplier Id :")
+            supplier_name = input("Enter Supplier Name :")
+            supplier_contact_number = input("Enter Supplier Contact Number :")         
+            update_supplier(supplier_id, supplier_name, supplier_contact_number)
+            get_suppliers_table()
+
+        case "5":
+            supplier_id = input("Enter Supplier Id :")
+            delete_supplier(supplier_id)
+            get_suppliers_table()
+            
+        case _:
+            print("Invalid Serial No.")
+
+
+user_input = input("Enter a serial number from above table :")
 
 match user_input:
     case "1":
@@ -156,6 +225,9 @@ match user_input:
 
     case "2":
         inventory_table()
+
+    case "3":
+        supplier_table()
 
     case _:
         print("Invalid Serial No.")
