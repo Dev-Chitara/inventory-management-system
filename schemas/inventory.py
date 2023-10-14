@@ -4,7 +4,7 @@ from schemas.products import get_products
 from schemas.suppliers import get_suppliers
 
 
-FILE_PATH = "/home/dev/workspace/projects/inventory-management-system/db/products.csv"
+FILE_PATH = "/home/dev/workspace/projects/inventory-management-system/db/inventory.csv"
 FIELDS = ["id", "name", "location", "inventory_type", "product_ids", "supplier_ids"]
 
 

@@ -49,8 +49,11 @@ def interface(filename, functions):
         case "2":
             fields = {}
 
+            records = functions.get("get_list")()
             for fieldname in records[0].keys():
-                fields[fieldname] = input(f"Enter {fieldname}")
+                if fieldname == "id":
+                    continue
+                fields[fieldname] = input(f"Enter {fieldname} :")
             functions.get("create")(**fields)
             records = functions.get("get_list")()
             get_table(path, records)
