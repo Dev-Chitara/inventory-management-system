@@ -2,7 +2,7 @@ import uuid
 import csv
 
 FIELDS = ["id", "name", "description", "price", "quantity"]
-FILE_PATH = "/home/dev/workspace/projects/inventory-management-system/db/products.csv"
+FILE_PATH = "/home/dev/workspace/projects/inventory_management_system/db/products.csv"
 
 
 class Product:
