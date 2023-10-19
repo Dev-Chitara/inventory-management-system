@@ -1,4 +1,4 @@
-id,name,location,inventory_type,product_ids,supplier_ids
-6b345ab5-f635-4631-aa2c-2133b968e7eb,Fruits,Junagadh,Fruit,[],[]
-bc9552b6-487c-46db-97e0-3ddef05696d0,Dryfruits,Jamnagar,Dry,[],[]
-7f76f3df-f504-431d-8ec3-5aed4f202334,Electronics,Rajkot,Electronics,[],[]
+id,name,location,inventory_type,product_stock
+6b345ab5-f635-4631-aa2c-2133b968e7eb,Fruits,Junagadh,Fruit,[]
+bc9552b6-487c-46db-97e0-3ddef05696d0,Dryfruits,Jamnagar,Dry,[]
+7f76f3df-f504-431d-8ec3-5aed4f202334,Electronics,Rajkot,Electronics,[]

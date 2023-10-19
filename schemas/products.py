@@ -1,18 +1,17 @@
 import uuid
 import csv
 
-FIELDS = ["id", "name", "description", "price", "quantity"]
-FILE_PATH = "/home/dev/workspace/projects/inventory_management_system/db/products.csv"
+FIELDS = ["id", "name", "description", "price"]
+FILE_PATH = "./inventory_management_system/db/products.csv"
 
 
 class Product:
 
-    def __init__(self, name, description, price, quantity):
+    def __init__(self, name, description, price):
         self.id = uuid.uuid4()
         self.name = name
         self.description = description
         self.price = price
-        self.quantity = quantity
         
         
     def _validation(self, data): 
@@ -20,7 +19,6 @@ class Product:
             "name": str,
             "description": str,
             "price": float,
-            "quantity": int
         }   
             
         for item in data:
@@ -41,7 +39,6 @@ class Product:
         self.name = kwargs.get("name", self.name)
         self.description = kwargs.get("description", self.description)
         self.price = kwargs.get("price", self.price)
-        self.quantity = kwargs.get("quantity", self.quantity)
 
 
     def get_product_details(self):
@@ -58,8 +55,8 @@ def get_products():
         return records
 
 
-def create_products(name, description, price, quantity):
-    product = Product(name, description, price, quantity)
+def create_products(name, description, price):
+    product = Product(name, description, price)
     product_dict = product.get_product_details()
 
     with open(FILE_PATH, "a") as file:
@@ -76,7 +73,7 @@ def get_product(id):
                 return item
     
 
-def update_product(id, name, description, price, quantity):
+def update_product(id, name, description, price):
     with open(FILE_PATH, "r") as file:
         reader = csv.DictReader(file)
 
@@ -88,7 +85,6 @@ def update_product(id, name, description, price, quantity):
                 row["name"]=name
                 row["description"]=description
                 row["price"]=price
-                row["quantity"]=quantity
 
                 is_exists = True
             records.append(row)

@@ -1,7 +1,7 @@
 import uuid
 import csv
 
-FILE_PATH = "/home/dev/workspace/projects/inventory-management-system/db/suppliers.csv"
+FILE_PATH = "./inventory_management_system/db/suppliers.csv"
 FIELDS = ["id", "name", "contact_number"]
 
 class Supplier:

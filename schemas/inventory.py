@@ -4,18 +4,17 @@ from schemas.products import get_products
 from schemas.suppliers import get_suppliers
 
 
-FILE_PATH = "/home/dev/workspace/projects/inventory-management-system/db/inventory.csv"
-FIELDS = ["id", "name", "location", "inventory_type", "product_ids", "supplier_ids"]
+FILE_PATH = "./inventory_management_system/db/inventory.csv"
+FIELDS = ["id", "name", "location", "inventory_type", "product_stock"]
 
 
 class Inventory:
-    def __init__(self,name, location, inventory_type, product_ids = [], supplier_ids = []):
+    def __init__(self,name, location, inventory_type, product_stock = {}):
         self.id = uuid.uuid4()
         self.name = name
         self.location = location
         self.inventory_type = inventory_type
-        self.product_ids = product_ids
-        self.supplier_ids = supplier_ids
+        self.product_stock = product_stock
 
     
     def _validation(self, data):
@@ -50,13 +49,8 @@ class Inventory:
 
     def add_product_id(self):
         for item in get_products():
-            self.product_ids.append(item["id"]) 
-
-
-    def add_supplier_id(self):
-        for item in get_suppliers():
-            self.supplier_ids.append(item["id"])    
-
+            self.products.append(item["id"]) 
+   
 
 def get_inventory_list():
     with open(FILE_PATH,"r") as file:
@@ -133,3 +127,4 @@ def delete_inventory(id):
     
     return (is_exists,"Successfully deleted")
 
+# products - > product_stock - product_id , quantity, supplier_id (list of dictionary)
