@@ -101,6 +101,7 @@ def update_inventory(id, name, location, inventory_type):
         return (is_exists, "Inventory does not exists") 
     
     return (is_exists,"Successfully updated")
+   
     
 def delete_inventory(id):
     with open(FILE_PATH, "r") as file:
