@@ -1,22 +1,24 @@
 import uuid
 import csv
-from schemas.products import get_products
-from schemas.suppliers import get_suppliers
+from schemas.products import get_product
+from schemas.suppliers import get_supplier
 
 
 FILE_PATH = "./inventory_management_system/db/inventory.csv"
-FIELDS = ["id", "name", "location", "inventory_type", "product_stock"]
+FIELDS = ["id", "name", "location", "inventory_type", "product_id", "supplier_id", "quantity"]
 
 
 class Inventory:
-    def __init__(self,name, location, inventory_type, product_stock = {}):
+    def __init__(self,name, location, inventory_type, product_id, supplier_id, quantity):
         self.id = uuid.uuid4()
         self.name = name
         self.location = location
         self.inventory_type = inventory_type
-        self.product_stock = product_stock
+        self.product_id = product_id
+        self.supplier_id = supplier_id
+        self.quantity = quantity
 
-    
+
     def _validation(self, data):
         valid_type = {
             "name": str,
@@ -45,12 +47,7 @@ class Inventory:
 
     def get_inventory_details(self):
         return self.__dict__
-        
 
-    def add_product_id(self):
-        for item in get_products():
-            self.products.append(item["id"]) 
-   
 
 def get_inventory_list():
     with open(FILE_PATH,"r") as file:
@@ -62,17 +59,17 @@ def get_inventory_list():
         return inventory_list
 
 
-def create_inventory(name, location, inventory_type):
-    inventory = Inventory(name, location, inventory_type)
+def create_inventory(name, location, inventory_type, product_id, supplier_id, quantity):
+    inventory = Inventory(name, location, inventory_type, product_id, supplier_id, quantity)
     inventory_dict = inventory.get_inventory_details()
 
-    with open(FILE_PATH,"a") as file:
+    with open(FILE_PATH, "a") as file:
         writer = csv.DictWriter(file, fieldnames = FIELDS)
         writer.writerow(inventory_dict)
 
 
 def get_inventory(id):
-    with open(FILE_PATH,"r") as file:
+    with open(FILE_PATH, "r") as file:
         reader = csv.DictReader(file)
 
         for item in reader:
@@ -81,7 +78,7 @@ def get_inventory(id):
             
 
 def update_inventory(id, name, location, inventory_type):
-    with open(FILE_PATH,"r") as file:
+    with open(FILE_PATH, "r") as file:
         reader = csv.DictReader(file)
 
         records = []
@@ -96,7 +93,7 @@ def update_inventory(id, name, location, inventory_type):
             records.append(item)
 
     if is_exists:
-        with open(FILE_PATH,"w") as file:
+        with open(FILE_PATH, "w") as file:
             writer = csv.DictWriter(file, fieldnames = FIELDS)
             writer.writeheader()
             writer.writerows(records)
@@ -106,7 +103,7 @@ def update_inventory(id, name, location, inventory_type):
     return (is_exists,"Successfully updated")
     
 def delete_inventory(id):
-    with open(FILE_PATH,"r") as file:
+    with open(FILE_PATH, "r") as file:
         reader = csv.DictReader(file)
 
         records = []
@@ -118,7 +115,7 @@ def delete_inventory(id):
                 records.append(item)
 
     if is_exists:
-        with open(FILE_PATH,"w") as file:
+        with open(FILE_PATH, "w") as file:
             writer = csv.DictWriter(file, fieldnames = FIELDS)
             writer.writeheader()
             writer.writerows(records)
@@ -128,3 +125,13 @@ def delete_inventory(id):
     return (is_exists,"Successfully deleted")
 
 # products - > product_stock - product_id , quantity, supplier_id (list of dictionary)
+# id,name,location,inventory_type,product_stock
+# 6b345ab5-f635-4631-aa2c-2133b968e7eb,Fruits,Junagadh,Fruit
+# bc9552b6-487c-46db-97e0-3ddef05696d0,Dryfruits,Jamnagar,Dry
+# 7f76f3df-f504-431d-8ec3-5aed4f202334,Electronics,Rajkot,Electronics
+
+# create_inventory("Fruits", "Junagadh", "Fruit", "33160059-9103-41bb-8828-22a96662d2fb", "97ab0f05-89c1-435c-9ec5-71fc05b6353c", 20)
+# create_inventory("Fruits", "Junagadh", "Fruit", "444a497d-1b4b-4adb-ac3d-ee269d238678", "2e768f3b-dfa9-43dd-94ee-52b10ee1e7fd", 15)
+# create_inventory("Fruits", "Junagadh", "Fruit", "5681e482-51e7-4f37-84bb-7e6de1888d0a", "86472266-80e2-4dca-afe6-8acb1bbb3060", 30)
+# create_inventory("Fruits", "Junagadh", "Fruit", "b1524357-13c7-47cb-981f-74c62ddb5878", "04026ba0-e93f-43a7-8611-a5e83b818b21", 25)
+# create_inventory("Fruits", "Junagadh", "Fruit", "33160059-9103-41bb-8828-22a96662d2fb", "b7f9227b-cd09-488d-bc13-d805aa0c2d35", 20)
