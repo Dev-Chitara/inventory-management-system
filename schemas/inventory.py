@@ -1,22 +1,20 @@
 import uuid
 import csv
-from schemas.products import get_product
-from schemas.suppliers import get_supplier
+from schemas.products import get_products
+from schemas.suppliers import get_suppliers
 
 
 FILE_PATH = "./inventory_management_system/db/inventory.csv"
-FIELDS = ["id", "name", "location", "inventory_type", "product_id", "supplier_id", "quantity"]
+FIELDS = ["id", "name", "location", "inventory_type", "product_stock"]
 
 
 class Inventory:
-    def __init__(self,name, location, inventory_type, product_id, supplier_id, quantity):
+    def __init__(self,name, location, inventory_type, product_stock = []):
         self.id = uuid.uuid4()
         self.name = name
         self.location = location
         self.inventory_type = inventory_type
-        self.product_id = product_id
-        self.supplier_id = supplier_id
-        self.quantity = quantity
+        self.product_stock = product_stock
 
 
     def _validation(self, data):
@@ -25,7 +23,7 @@ class Inventory:
             "location": str,
             "inventory_type": str
         }
-
+        
         for item in data:
             if type(data.get(item)) != valid_type.get(item):
                 return f"Cannot set invalid value :{item}"
@@ -44,9 +42,16 @@ class Inventory:
         self.location = kwargs.get("location", self.location)
         self.inventory_type = kwargs.get("inventory_type", self.inventory_type)
 
-
     def get_inventory_details(self):
         return self.__dict__
+
+
+    def add_product_stock(self):
+        self.product_stock = []
+
+        self.product_stock.append(get_products())
+        self.product_stock.append(get_suppliers())
+
 
 
 def get_inventory_list():
@@ -59,8 +64,8 @@ def get_inventory_list():
         return inventory_list
 
 
-def create_inventory(name, location, inventory_type, product_id, supplier_id, quantity):
-    inventory = Inventory(name, location, inventory_type, product_id, supplier_id, quantity)
+def create_inventory(name, location, inventory_type, product_stock):
+    inventory = Inventory(name, location, inventory_type, product_stock)
     inventory_dict = inventory.get_inventory_details()
 
     with open(FILE_PATH, "a") as file:
@@ -101,8 +106,8 @@ def update_inventory(id, name, location, inventory_type):
         return (is_exists, "Inventory does not exists") 
     
     return (is_exists,"Successfully updated")
-   
-    
+
+
 def delete_inventory(id):
     with open(FILE_PATH, "r") as file:
         reader = csv.DictReader(file)
@@ -125,7 +130,8 @@ def delete_inventory(id):
     
     return (is_exists,"Successfully deleted")
 
-# products - > product_stock - product_id , quantity, supplier_id (list of dictionary)
+# products - > product_stock - product_id , quantity, supplier_id (list of dictionary) 
+
 # id,name,location,inventory_type,product_stock
 # 6b345ab5-f635-4631-aa2c-2133b968e7eb,Fruits,Junagadh,Fruit
 # bc9552b6-487c-46db-97e0-3ddef05696d0,Dryfruits,Jamnagar,Dry
